@@ -5,7 +5,7 @@ let playerMoney = 10;
 
 // You can also log multiple values at once like this: console.log(playerName, playerAttack, playerHealth);
 
-const enemyName = "Roborto";
+const enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 let enemyHealth = 50;
 let enemyAttack = 12;
 
@@ -16,7 +16,9 @@ let enemyAttack = 12;
 //  * Defeat each enemy-robot
 // "LOSE" - Player robot's health is zero or less
 
-const fight = () => {
+
+
+const fight = (enemyName) => {
 
     // Alert users that they are starting the round
     alert("Welcome to Robot Gladiators");
@@ -69,5 +71,7 @@ const fight = () => {
 
 }
 
-// fight();
+for ( i = 0; i < enemyNames.length; i++) {
+    fight(enemyNames[i]);
+}
 
