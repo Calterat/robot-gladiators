@@ -1,10 +1,19 @@
-const fight = (enemy) => {
+const fightOrSkip = () => {
+    // ask player if they'd like to fight or skip using fightOrSkip function
+    let promptFight = prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
 
-    while(enemy.health > 0 && playerInfo.health > 0) {
+    // validate input for fightOrSkip
+    if (promptFight === "" || promptFight === null) {
+        alert("You need to provide a valid answer! Please try again.");
+        fightOrSkip();
+    }
 
-        let promptFight = prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+    promptFight = promptFight.toLowerCase();
 
-        if (promptFight === 'SKIP' || promptFight === 'skip') {
+    switch (promptFight) {
+        case 'fight':
+            return false;
+        case 'skip':
             //confirm skip
             let confirmSkip = confirm("Are you sure you'd like to quit?");
             // if yes (true), leave fight
@@ -12,20 +21,45 @@ const fight = (enemy) => {
                 alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
                 //subtract monies
                 playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
-                break;
+                return true;
+            } else {
+                return false;
             }
+        default:
+            alert("You did not pick a valid option. Try again.");
+            fightOrSkip();
+    }
+        /* 
+     if (promptFight === 'skip') {
+        //confirm skip
+        let confirmSkip = confirm("Are you sure you'd like to quit?");
+        // if yes (true), leave fight
+        if (confirmSkip) {
+            alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+            //subtract monies
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            return true;
+        } else {
+            return false;
         }
+    }
+        */
+}
+const checkHealth = (name, health) => {
+    if (health <= 0) {
+        return name + " has died!";
+    } else {
+        return name + " still has " + health + " health left";
+    }
+}
 
-        if (promptFight === 'FIGHT' || promptFight === 'fight') {
+const fight = (enemy) => {
 
-            const checkhealth = (name, health) => {
-                if (health <= 0) {
-                    return name + " has died!";
-                } else {
-                    return name + " still has " + health + " health left";
-                }
-            }
+    while(enemy.health > 0 && playerInfo.health > 0) {
+           
+        if (fightOrSkip()) {
+            break;
+        }
 
             //Subtract the value of 'playerInfo.attack' from the value of 'enemy.health' and use that result to update the value in the 'enemy.health' variable.
             let damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
@@ -35,11 +69,11 @@ const fight = (enemy) => {
             console.log(playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining.");
 
             // check enemy's health
-            alert(checkhealth(enemy.name, enemy.health));
+            alert(checkHealth(enemy.name, enemy.health));
             if (enemy.health <= 0) {
                 break;
-             }
-        
+            }
+            
             // Subtract the value of 'enemy.attack' from the value of 'playerInfo.health' and use that result to update the value in the 'playerInfo.health' variable.
             damage = randomNumber(enemy.attack - 3, enemy.attack);
             playerInfo.health = Math.max(0, playerInfo.health - damage);
@@ -48,13 +82,12 @@ const fight = (enemy) => {
             console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
 
             // check player's health
-            alert(checkhealth(playerInfo.name, playerInfo.health));
+            alert(checkHealth(playerInfo.name, playerInfo.health));
             // kicks you out of the loop/fight if you are dead
             if (playerInfo.health <= 0) {
                 break;
-            }
-        }        
-            
+            }        
+          
 
     }
 }
@@ -148,6 +181,7 @@ const getPlayerName = () => {
     }
 
     console.log("Your robot's name is " + name);
+    return name;
 }
 
 const playerInfo = {
