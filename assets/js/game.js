@@ -88,6 +88,15 @@ const startGame = () => {
             let pickedEnemyName = enemyNames[i];
             enemyHealth = 50;
             fight(pickedEnemyName);
+            // if we're not at the last enemy in the array
+            if (i < enemyNames.length - 1 && playerHealth > 0) {
+                // ask if player want to use the sore before next round
+                let storeConfirm = confirm("The fight is over, visit the store before the next round?");
+                // if yes, take them to the store() function
+                if (storeConfirm) {
+                    shop();
+                }
+            }
         } else {
             alert("You have lost your robot in battle! Game Over!");
             break;
@@ -116,6 +125,55 @@ const endGame = () => {
     }
     
 }
+
+const shop = () => {
+    // ask player what they'd like to do
+    let shopOptionPrompt = prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
+    // use switch to carry out action
+    switch (shopOptionPrompt) {
+        case "REFILL":
+        case "refill":
+            if (playerMoney >= 7) {
+                alert("Refilling player's health by 20 for 7 dollars.");
+
+                // increase health and decrease money
+                playerHealth += 20;
+                playerMoney -= 7;
+            } else {
+                alert("You don't have enough money!");
+            }
+            break;
+        case "UPGRADE":
+        case "upgrade":
+            if (playerMoney >= 7) {
+                alert("Upgrading player's attack by 6 for 7 dollars.");
+
+                // increase health and decrease money
+                playerAttack += 6;
+                playerMoney -= 7;
+            } else {
+                alert("You don't have enough money!");
+            }
+            break;
+        case "LEAVE":
+        case "leave":
+            alert("Leaving the store.");
+
+            // do nothing, so function will end
+            break;
+        default:
+            alert("You did not pick a valid option. Try again.");
+
+            // call shop() again to force player to pick a valid option
+            shop();
+            break;
+    }
+}
+
+
+
+
+
 
 
 startGame();
