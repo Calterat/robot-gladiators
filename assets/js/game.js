@@ -22,9 +22,6 @@ const fight = (enemyName) => {
 
     while(enemyHealth > 0 && playerHealth > 0) {
 
-        // Alert users that they are starting the round
-        alert("Welcome to Robot Gladiators");
-
         let promptFight = prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
 
         if (promptFight === 'SKIP' || promptFight === 'skip') {
@@ -81,8 +78,15 @@ const fight = (enemyName) => {
 }
 
 for ( i = 0; i < enemyNames.length; i++) {
-    let pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(pickedEnemyName);
+    if (playerHealth >0) {
+        alert("Welcome to Robot Gladiators! Round " + (i+1));
+        let pickedEnemyName = enemyNames[i];
+        enemyHealth = 50;
+        fight(pickedEnemyName);
+    } else {
+        alert("You have lost your robot in battle! Game Over!");
+        break;
+    }
+    
 }
 
