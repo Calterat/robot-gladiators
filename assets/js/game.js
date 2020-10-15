@@ -55,29 +55,40 @@ const checkHealth = (name, health) => {
 
 const fight = (enemy) => {
 
+    // keep track of who goes first
+    let isPlayerTurn = true;
+    // randomly change turn order
+    if (Math.random() > .5) {
+        isPlayerTurn = false;
+    }
+
     while(enemy.health > 0 && playerInfo.health > 0) {
-           
-        if (fightOrSkip()) {
-            break;
-        }
+        
+        if (isPlayerTurn) {
+            // ask player if they'd like to fight or skip using fightOrSkip function
+            if (fightOrSkip()) {
+                // if true, leave fight by breaking loop
+                break;
+            }
 
             //Subtract the value of 'playerInfo.attack' from the value of 'enemy.health' and use that result to update the value in the 'enemy.health' variable.
             let damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
             enemy.health = Math.max(0, enemy.health - damage);
-
             // Log a resulting message to the console so we know that it worked.
             console.log(playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining.");
 
             // check enemy's health
             alert(checkHealth(enemy.name, enemy.health));
             if (enemy.health <= 0) {
+                // award player money for winning
+                playerInfo.money = playerInfo.money + 20;
+                // leave while() loop since enemy is dead
                 break;
             }
-            
+        } else {                
             // Subtract the value of 'enemy.attack' from the value of 'playerInfo.health' and use that result to update the value in the 'playerInfo.health' variable.
             damage = randomNumber(enemy.attack - 3, enemy.attack);
             playerInfo.health = Math.max(0, playerInfo.health - damage);
-
             // Log a resulting message to the console so we know that it worked.
             console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
 
@@ -86,9 +97,11 @@ const fight = (enemy) => {
             // kicks you out of the loop/fight if you are dead
             if (playerInfo.health <= 0) {
                 break;
-            }        
-          
-
+            }     
+        }
+        // switch turn order for next round
+        isPlayerTurn = !isPlayerTurn;
+        
     }
 }
 
