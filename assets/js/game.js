@@ -31,7 +31,7 @@ const fight = (enemyName) => {
             if (confirmSkip) {
                 alert(playerName + " has decided to skip this fight. Goodbye!");
                 //subtract monies
-                playerMoney -= 10;
+                playerMoney = Math.max(0, playerMoney - 10);
                 console.log("playerMoney", playerMoney);
                 break;
             }
@@ -48,7 +48,8 @@ const fight = (enemyName) => {
             }
 
             //Subtract the value of 'playerAttack' from the value of 'enemyHealth' and use that result to update the value in the 'enemyHealth' variable.
-            enemyHealth -= playerAttack;
+            let damage = randomNumber(playerAttack - 3, playerAttack);
+            enemyHealth = Math.max(0, enemyHealth - damage);
 
             // Log a resulting message to the console so we know that it worked.
             console.log(playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.");
@@ -60,7 +61,8 @@ const fight = (enemyName) => {
              }
         
             // Subtract the value of 'enemyAttack' from the value of 'playerHealth' and use that result to update the value in the 'playerHealth' variable.
-            playerHealth -= enemyAttack;
+            damage = randomNumber(enemyAttack - 3, enemyAttack);
+            playerHealth = Math.max(0, playerHealth - damage);
 
             // Log a resulting message to the console so we know that it worked.
             console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
@@ -86,7 +88,8 @@ const startGame = () => {
         if (playerHealth >0) {
             alert("Welcome to Robot Gladiators! Round " + (i+1));
             let pickedEnemyName = enemyNames[i];
-            enemyHealth = 50;
+            // min max of 40-60hp for enemy @ random
+            enemyHealth = randomNumber(40, 60);
             fight(pickedEnemyName);
             // if we're not at the last enemy in the array
             if (i < enemyNames.length - 1 && playerHealth > 0) {
@@ -170,7 +173,10 @@ const shop = () => {
     }
 }
 
-
+const randomNumber = (min, max) => {
+    let value = Math.floor((Math.random() * (max - min + 1)) + min);
+    return value; 
+}
 
 
 
