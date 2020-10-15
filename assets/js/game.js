@@ -20,58 +20,62 @@ let enemyAttack = 12;
 
 const fight = (enemyName) => {
 
-    // Alert users that they are starting the round
-    alert("Welcome to Robot Gladiators");
+    while(enemyHealth > 0) {
 
-    let promptFight = prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+        // Alert users that they are starting the round
+        alert("Welcome to Robot Gladiators");
+
+        let promptFight = prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
 
 
-    if (promptFight === 'FIGHT' || promptFight === 'fight') {
+        if (promptFight === 'FIGHT' || promptFight === 'fight') {
 
-        const checkhealth = (name, health) => {
-            if (health <= 0) {
-                return name + " has died!";
-            } else {
-                return name + " still has " + health + " health left";
+            const checkhealth = (name, health) => {
+                if (health <= 0) {
+                    return name + " has died!";
+                } else {
+                    return name + " still has " + health + " health left";
+                }
             }
-        }
 
-        //Subtract the value of 'playerAttack' from the value of 'enemyHealth' and use that result to update the value in the 'enemyHealth' variable.
-        enemyHealth -= playerAttack;
+            //Subtract the value of 'playerAttack' from the value of 'enemyHealth' and use that result to update the value in the 'enemyHealth' variable.
+            enemyHealth -= playerAttack;
 
-        // Log a resulting message to the console so we know that it worked.
-        console.log(playerName + " attacked " + enemyName + ". " + enemyName + "now has " + enemyHealth + " health remaining.");
+            // Log a resulting message to the console so we know that it worked.
+            console.log(playerName + " attacked " + enemyName + ". " + enemyName + "now has " + enemyHealth + " health remaining.");
 
-        // check enemy's health
-        alert(checkhealth(enemyName, enemyHealth));
-        // Subtract the value of 'enemyAttack' from the value of 'playerHealth' and use that result to update the value in the 'playerHealth' variable.
-        playerHealth -= enemyAttack;
+            // check enemy's health
+            alert(checkhealth(enemyName, enemyHealth));
+            // Subtract the value of 'enemyAttack' from the value of 'playerHealth' and use that result to update the value in the 'playerHealth' variable.
+            playerHealth -= enemyAttack;
 
-        // Log a resulting message to the console so we know that it worked.
-        console.log(enemyName + " attacked " + playerName + ". " + playerName + "now has " + playerHealth + " health remaining.");
+            // Log a resulting message to the console so we know that it worked.
+            console.log(enemyName + " attacked " + playerName + ". " + playerName + "now has " + playerHealth + " health remaining.");
 
-        // check player's health
-        alert(checkhealth(playerName, playerHealth));
-    } else if (promptFight === 'SKIP' || promptFight === 'skip') {
-        //confirm skip
-        let confirmSkip = confirm("Are you sure you'd like to quit?");
-        // if yes (true), leave fight
-        if (confirmSkip) {
-            alert(playerName + " has decided to skip this fight. Goodbye!");
-            //subtract monies
-            playerMoney -= 2;
+            // check player's health
+            alert(checkhealth(playerName, playerHealth));
+        } else if (promptFight === 'SKIP' || promptFight === 'skip') {
+            //confirm skip
+            let confirmSkip = confirm("Are you sure you'd like to quit?");
+            // if yes (true), leave fight
+            if (confirmSkip) {
+                alert(playerName + " has decided to skip this fight. Goodbye!");
+                //subtract monies
+                playerMoney -= 2;
+            } else {
+                fight();
+            }
         } else {
-            fight();
+            alert("You need to pick a valid option. Try again!");
         }
-    } else {
-        alert("You need to pick a valid option. Try again!");
+    
+
     }
-   
-
-
 }
 
 for ( i = 0; i < enemyNames.length; i++) {
-    fight(enemyNames[i]);
+    let pickedEnemyName = enemyNames[i];
+    enemyHealth = 50;
+    fight(pickedEnemyName);
 }
 
