@@ -140,8 +140,18 @@ const randomNumber = (min, max) => {
     return value; 
 }
 
+const getPlayerName = () => {
+    let name = "";
+
+    while (name === "" || name === null) {
+        name = prompt("What's your robot's name?");
+    }
+
+    console.log("Your robot's name is " + name);
+}
+
 const playerInfo = {
-    name: prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
@@ -184,7 +194,6 @@ const enemyInfo = [
         attack: randomNumber(10, 14)
     }
 ];
-
 
 
 
