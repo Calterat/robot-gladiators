@@ -29,21 +29,6 @@ const fightOrSkip = () => {
             alert("You did not pick a valid option. Try again.");
             fightOrSkip();
     }
-        /* 
-     if (promptFight === 'skip') {
-        //confirm skip
-        let confirmSkip = confirm("Are you sure you'd like to quit?");
-        // if yes (true), leave fight
-        if (confirmSkip) {
-            alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
-            //subtract monies
-            playerInfo.money = Math.max(0, playerInfo.money - 10);
-            return true;
-        } else {
-            return false;
-        }
-    }
-        */
 }
 const checkHealth = (name, health) => {
     if (health <= 0) {
